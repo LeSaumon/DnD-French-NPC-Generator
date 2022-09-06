@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 type TranslationApiRequestBody = {
-    text: string;
+    text: string[] | string;
     target_lang: string;
     source_lang?: string;
 }
@@ -15,12 +15,12 @@ type TranslationApiResponse = {
     translations: TranslationApiDatum[];
   };
 
-const fetcher = async (url: string, headers: AxiosRequestConfig, body: TranslationApiRequestBody) => {
+const fetcher = async (url: string, headers: AxiosRequestConfig, body: TranslationApiRequestBody) : Promise<TranslationApiResponse> => {
     const { data } = await axios.post<TranslationApiResponse>(url, body, headers);
     return data;
 }
 
-const translateToFrench = async (text: string) => {
+const translateToFrench = async (text: string[] | string) : Promise<TranslationApiResponse> => {
     const url = "https://api-free.deepl.com/v2/translate";
     const apiKey = "YOUR_API_KEY";
     const headers = {
@@ -36,4 +36,12 @@ const translateToFrench = async (text: string) => {
     }
     const data = await fetcher(url, headers, body);
     return data;
+}
+
+const removeEscapeCharacter = (str : string) : string => {
+    // Remove the trailing \n from a string if it exists
+    if (str.endsWith('\n')) {
+        return str.slice(0, -1);
+    }
+    return str;
 }
