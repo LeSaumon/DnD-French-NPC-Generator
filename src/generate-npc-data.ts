@@ -18,7 +18,10 @@ async function main() {
     // Get the NPC data from the page
     const description = await page.$$eval('div.npc-data > *', values => { return values.filter(value => value.innerText !== "#").map(value => value.innerText)})
     const noEscapeDescription = description.map(string => removeEscapeCharacter(string));
-    console.log(noEscapeDescription)
+
+    // Create Data structure to send to DeepL API
+    // Use UTF-8 encoded plain text
+
     // Put the NPC data into a file
     fs.writeFileSync('npc-data.txt', noEscapeDescription.join('\n'));
     await browser.close();
