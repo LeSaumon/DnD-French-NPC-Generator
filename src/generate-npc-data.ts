@@ -1,6 +1,6 @@
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 const WEBSITE_URL = 'http://www.npcgenerator.com/';
-const fs = require('fs');
+import fs from "fs";
 
 const removeEscapeCharacter = (str) => {
     // Remove the trailing \n from a string if it exists
@@ -17,10 +17,10 @@ async function main() {
 
     // Get the NPC data from the page
     const description = await page.$$eval('div.npc-data > *', values => { return values.filter(value => value.innerText !== "#").map(value => value.innerText)})
-    const noEscapeDescription = noEscapeDescription.map(string => removeEscapeCharacter(string));
+    const noEscapeDescription = description.map(string => removeEscapeCharacter(string));
     console.log(noEscapeDescription)
     // Put the NPC data into a file
-    fs.writeFileSync('./npc-data.txt', noEscapeDescription.join('\n'));
+    fs.writeFileSync('npc-data.txt', noEscapeDescription.join('\n'));
     await browser.close();
 }
 
