@@ -1,3 +1,5 @@
+import puppeteer from 'puppeteer';
+import * as dotenv from 'dotenv';
 import axios, { AxiosRequestConfig } from "axios";
 
 type TranslationApiRequestBody = {
@@ -15,14 +17,19 @@ type TranslationApiResponse = {
     translations: TranslationApiDatum[];
   };
 
+const result = dotenv.config();
+if (result.error) {
+    throw result.error;
+}
+
 const fetcher = async (url: string, headers: AxiosRequestConfig, body: TranslationApiRequestBody) : Promise<TranslationApiResponse> => {
     const { data } = await axios.post<TranslationApiResponse>(url, body, headers);
     return data;
 }
 
-const translateToFrench = async (text: string[] | string) : Promise<TranslationApiResponse> => {
-    const url = "https://api-free.deepl.com/v2/translate";
-    const apiKey = "YOUR_API_KEY";
+export const translateToFrench = async (text: string[] | string) : Promise<TranslationApiResponse> => {
+    const url = process.env.API_URL;
+    const apiKey = process.env.API_KEY;
     const headers = {
         headers: {
             "Content-Type": "application/json",
@@ -38,10 +45,25 @@ const translateToFrench = async (text: string[] | string) : Promise<TranslationA
     return data;
 }
 
-const removeEscapeCharacter = (str : string) : string => {
+export const removeEscapeCharacter = (str : string) : string => {
     // Remove the trailing \n from a string if it exists
-    if (str.endsWith('\n')) {
-        return str.slice(0, -1);
+    return str.trim();
+}
+
+export const getDescription = async () : Promise<string[]> => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(process.env.WEBSITE_URL);
+    const description = await page.$$eval('div.npc-data > *', values => { return values.filter(value => value.innerText !== "#").map(value => value.innerText)})
+    await browser.close();
+    const trimmedDescription = description.slice(0, 3)
+    return trimmedDescription;
+}
+
+export const splitMulti = (str : string, tokens : string[]) : string[] => {
+    const tempChar = tokens[0]; // We can use the first token as a temporary join character
+    for(let i = 1; i < tokens.length; i++){
+        str = str.split(tokens[i]).join(tempChar);
     }
-    return str;
+    return str.split(tempChar).map((string) => string.trim()).filter((string) => string !== "");
 }

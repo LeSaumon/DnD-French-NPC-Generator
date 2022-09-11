@@ -36,6 +36,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
     "puppeteer": "^17.1.1",
     "tslib": "~2.4",
     "utf8": "^3.0.0"
