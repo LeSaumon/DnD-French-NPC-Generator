@@ -45,16 +45,16 @@ export const translateToFrench = async (text: string[] | string) : Promise<Trans
     return data;
 }
 
-export const removeEscapeCharacter = (str : string) : string => {
-    // Remove the trailing \n from a string if it exists
-    return str.trim();
+export const removeEscapeCharacter = (index: number, replacement: string, str: string) : string => {
+    console.log(str);
+    return str.substring(0, index) + replacement + str.substring(index + replacement.length);
 }
 
-export const getDescription = async () : Promise<string[]> => {
+export const getData = async (selector: string) : Promise<string[]> => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(process.env.WEBSITE_URL);
-    const description = await page.$$eval('div.npc-data > *', values => { return values.filter(value => value.innerText !== "#").map(value => value.innerText)})
+    const description = await page.$$eval(selector, values => { return values.filter(value => value.innerText !== '#').map(value => value.innerText)})
     await browser.close();
     const trimmedDescription = description.slice(0, 3)
     return trimmedDescription;
