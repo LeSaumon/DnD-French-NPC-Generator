@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 import * as dotenv from 'dotenv';
-import axios, { AxiosRequestConfig } from "axios";
+import {default as axios, AxiosRequestConfig} from 'axios';
 
 type TranslationApiRequestBody = {
     text: string[] | string;

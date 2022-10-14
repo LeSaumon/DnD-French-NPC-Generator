@@ -5,6 +5,10 @@
   "engines": {
     "node": ">= 16.13 <17"
   },
+  "type": "module",
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
   "devDependencies": {
     "@types/jest": "~27.5",
     "@types/node": "~16",

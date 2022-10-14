@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import * as dotenv from 'dotenv';
 // import fs from 'fs';
-import { getDescription, splitMulti } from './util';
+import { getDescription, splitMulti } from './util.js';
 // import { removeEscapeCharacter } from './util';
 
 const result = dotenv.config();
@@ -37,14 +37,14 @@ async function main() {
 
     // Get the NPC data from the page
     const description = await getDescription();
-    
+
 
     // const descriptionAndPersonality = description[0].split("Description\n")[1].split("Personality Traits\n").map((string) => string.trim());
     // desc & personality : ok
     const descriptionAndPersonality = splitMulti(description[0], ["Description\n", "Personality Traits\n"]);
-    
+
     const abilityScoreRelationshipsAlignment = splitMulti(description[1], ["Ability Scores\n", "Relationships\n", "Alignment Tendencies\n"]);
-    
+
 
     const plotHook = splitMulti(description[2], ["Plot Hooks\n"]);
     console.log(descriptionAndPersonality);
