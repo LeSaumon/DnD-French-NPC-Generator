@@ -6,8 +6,8 @@ if (result.error) {
 }
 
 async function main() {
-  const result = await getDataFromWebsite();
-  console.log(result);
+  const data = await getDataFromWebsite();
+  console.log(data);
 }
 
 main();

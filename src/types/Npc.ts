@@ -1,18 +1,16 @@
-import internal from "stream"
-
-type DescriptionAndPersonality = {
+export type DescriptionAndPersonality = {
   description: Description,
   personnality: Personnality
 }
-type Description = {
-  description: string[]
+export type Description = {
+  description: string
 }
 
-type Personnality = {
-  traits: string[]
+export type Personnality = {
+  traits: string
 }
 
-type Abilities = {
+export type Abilities = {
   strength: string,
   dexterity: string,
   constitution: string,
@@ -21,22 +19,22 @@ type Abilities = {
   charisma: string,
 }
 
-type Relationships = {
+export type Relationships = {
   sexualOrientation: string,
   telationshipStatus: string
 }
 
-type Alignement = {
+export type Alignement = {
   lawful: number,
   good: number,
   evil: number,
   chaotic: number
 }
 
-type NpcData = {
-  description: Description,
-  personnality: Personnality,
+export type NpcData = {
+  description: string,
+  personnality: string,
   abilities: Abilities,
-  relationships: Relationships,
-  alignement: Alignement
+  relationships?: Relationships,
+  alignement?: Alignement
 }
