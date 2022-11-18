@@ -41,6 +41,7 @@
   "dependencies": {
     "@types/markdown-it": "^12.2.3",
     "axios": "^0.27.2",
+    "deepl-node": "^1.7.1",
     "dotenv": "^16.0.2",
     "markdown-it": "^13.0.1",
     "puppeteer": "^17.1.1",

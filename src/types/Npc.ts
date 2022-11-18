@@ -30,7 +30,6 @@ export type Alignement = {
   evil: number,
   chaotic: number
 }
-
 export type NpcData = {
   description: string,
   personnality: string,
