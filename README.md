@@ -13,7 +13,7 @@ You can use a tool like [Obsidian](https://obsidian.md/) to visualise markdown f
 
 ## How to use it
 
-⚠️ You have to reference your DeepL Api Key in the .env file located in the root directory of the project.
+⚠️ You have to create a `.env` file to reference your DeepL Api Key and the Website URL.
 
 ### Windows
 
