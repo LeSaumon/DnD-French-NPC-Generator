@@ -25,4 +25,4 @@ You can use a tool like [Obsidian](https://obsidian.md/) to visualise markdown f
 ### Linux
 
 1. Same process as Windows
-2. To launch the script, the command is `ts-node-esm`
+2. To launch the script, the command is `ts-node-esm ./src/main.ts`
