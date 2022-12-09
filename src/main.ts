@@ -1,13 +1,13 @@
 import * as dotenv from 'dotenv';
-import {getDataFromWebsite} from "./generate-file/generate-npc-data-lolo.js"
+import { getDataFromWebsite } from './generate-file/generateNpc.js';
+
 const result = dotenv.config();
 if (result.error) {
-    throw result.error;
+  throw result.error;
 }
 
 async function main() {
-  const data = await getDataFromWebsite();
-  console.log(data);
+  await getDataFromWebsite();
 }
 
 main();

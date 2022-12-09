@@ -1,8 +1,9 @@
 import * as dotenv from 'dotenv';
 import { Abilities, NpcData } from '../types/Npc.js';
 import { getData } from './util.js';
-import { abilityParser } from '../parser/Parser.js';
+import { abilityParser, markdownObjectToFileParser } from '../parser/Parser.js';
 import { translateDescription } from '../translator/translator.js';
+import { buildNpcFile } from '../markdown/markdownize.js';
 
 const result = dotenv.config();
 if (result.error) {
@@ -16,14 +17,18 @@ export const getDataFromWebsite = async () => {
   // Format data into object
   const abilities: Abilities = abilityParser(data[1]);
   const description = data[0].split('Personality Traits\n')[0];
-  const personnality = data[0]
-    .split('Personality Traits\n')[1]
-    .toString();
+  const personnality = data[0].split('Personality Traits\n')[1].toString();
+
   // Translate and parse data to an object
   const npcData: NpcData = {
     abilities: abilities,
     description: (await translateDescription(description)).toString(),
     personnality: (await translateDescription(personnality)).toString(),
   };
-  console.log(npcData);
+
+  // Build NPC Object with scrapped data
+  const npcDataFile = buildNpcFile(npcData);
+
+  // Write NPC Data into a markdown file
+  markdownObjectToFileParser(npcDataFile);
 };
